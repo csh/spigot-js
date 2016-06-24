@@ -32,7 +32,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventException;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockCanBuildEvent;
@@ -192,7 +191,7 @@ import org.bukkit.plugin.EventExecutor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class ScriptPlugin extends JavaPlugin implements Listener {
+public class ScriptPlugin extends JavaPlugin {
     private static Set<Class<? extends Event>> bukkitEvents = ImmutableSet.of(
             AsyncPlayerChatEvent.class,
             AsyncPlayerPreLoginEvent.class,
@@ -358,7 +357,7 @@ public class ScriptPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        HandlerList.unregisterAll(Plugin.class.cast(this));
+        HandlerList.unregisterAll(this);
         getServer().getScheduler().cancelTasks(this);
 
         if (scriptEngine != null) {
