@@ -1,6 +1,6 @@
 main: xyz.smirking.script.ScriptPlugin
 author: Connor Spencer Harries
-version: 1.0-SNAPSHOT
+version: 1.0
 name: SpigotJS
 commands:
   reload-scripts:
