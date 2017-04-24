@@ -3,17 +3,6 @@ package xyz.smirking.script;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.SetMultimap;
-
-import javax.script.ScriptException;
-
-import java.lang.reflect.Field;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.logging.Level;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -22,6 +11,15 @@ import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.SimplePluginManager;
+
+import javax.script.ScriptException;
+import java.lang.reflect.Field;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.logging.Level;
 
 @SuppressWarnings("unchecked")
 public class ScriptInterface {
@@ -105,7 +103,7 @@ public class ScriptInterface {
         }
     }
 
-    public <T extends Event> void emit(T event) throws ScriptException {
+    <T extends Event> void emit(T event) throws ScriptException {
         Preconditions.checkArgument(event != null, "event");
         plugin.getLogger().log(Level.FINEST, "emitted {0}", event.getClass().getCanonicalName());
         Set<Consumer<Event>> handlers = this.handlers.get(event.getClass());
@@ -124,7 +122,7 @@ public class ScriptInterface {
         }
     }
 
-    public void cleanup() {
+    void cleanup() {
         handlers.clear();
         synchronized (commandMap) {
             for (Iterator<Command> iterator = knownCommands.values().iterator(); iterator.hasNext(); ) {
