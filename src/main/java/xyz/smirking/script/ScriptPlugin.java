@@ -32,6 +32,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventException;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockCanBuildEvent;
@@ -378,10 +379,11 @@ public class ScriptPlugin extends JavaPlugin {
     public void onEnable() {
         scriptEngine = new ScriptEngineManager().getEngineByName("JavaScript");
 
-        EventExecutor executor = new ScriptEventExecutor(interfaces);
+        EventExecutor executor = new ScriptEventExecutor();
         bukkitEvents.stream().forEach(clazz -> {
             eventNames.put(clazz.getSimpleName(), clazz.getCanonicalName());
-            getServer().getPluginManager().registerEvent(clazz, this, EventPriority.NORMAL, executor, ScriptPlugin.this, false);
+            getServer().getPluginManager().registerEvent(clazz, new Listener() {
+            }, EventPriority.NORMAL, executor, ScriptPlugin.this, false);
         });
 
         File directory = new File(getDataFolder(), "scripts");
@@ -487,13 +489,7 @@ public class ScriptPlugin extends JavaPlugin {
         }
     }
 
-    private static final class ScriptEventExecutor implements EventExecutor {
-        private final Map<Path, ScriptInterface> interfaces;
-
-        ScriptEventExecutor(Map<Path, ScriptInterface> interfaces) {
-            this.interfaces = interfaces;
-        }
-
+    private final class ScriptEventExecutor implements EventExecutor {
         @Override
         public void execute(Listener listener, Event event) throws EventException {
             for (Iterator<Map.Entry<Path, ScriptInterface>> iterator = interfaces.entrySet().iterator(); iterator.hasNext(); ) {
