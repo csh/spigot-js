@@ -1,0 +1,13 @@
+language: java
+sudo: false
+jdk: oraclejdk8
+deploy:
+  provider: releases
+  api_key:
+    secure: brGEBKEsgLi/pTyzEFzeCypTSjdT9YyEDvGEewuTtpIryIZm5sNCFGRhy1SuM0qbg1enaQTNc+3fOt5UEepBbReV/8Rwud5pMoozvL4yZodO17gxg7CdateyMTdhMRsbb/30tToXwyT7UcamfBT7zXd+8UW1z2Shwjej4q8S7TZCixi+luSdO0ZixMr/EytB78BwACxG+n/04Vb9EiOUC5H3h2OXXWwe2ybKKcFQuUNOcTky3ai3+dU6pmYz9n4+lzAb4Q2UaYaghhQEQxrWnjj4w9gxXOLXToYinSFhJwE1SvjZwIaQ7zBpa2BTYGtj5r0F1UixO/vWJRlaCrXrp/VLwUsAjrEQBwjzC4DPEdLI0/Ge8h8TkU3Q6+2EtloVgzinqQJ6SjjRD9jCgpKPMWpTIXAypuyF1E4EWxowAxlRiHjWlWU7AT3EwcBXS9u6oJdKxY24r4vLfFGt41yfB+cbfD72sOyjVOoqOsSJQYYS0qVdAIVBk1e4Zb9NjK7DXoGaFi0aWDazzCDhM8/dReLu1Scs9PX4taKMoFJB9LFX+uMCO28YUqoXoyq9IrdwIjTFDrxNEAtUBpaLHpZYSDABd56YD5pw39GgAVlbpYn18JkBq6PuzSZ2EKs5ERt4akaDD/F7OjNObtcja6QVC4xpRPi8IvjJv78e2+QTPrc=
+  file_glob: true
+  file: build/libs/spigot-js-*.jar
+  skip_cleanup: true
+  on:
+    repo: csh/spigot-js
+    tags: true
